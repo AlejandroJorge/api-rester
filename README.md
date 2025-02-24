@@ -1,68 +1,118 @@
 # CLI REST Client
 
-Didn't like Postman / Insomnia / etc so I just made my own CLI tool for quickly testing my REST APIs
+A lightweight command-line REST client for testing APIs without the overhead of GUI applications like Postman or Insomnia.
+
+## Features
+
+- Simple JSON-based request configuration
+- Support for GET, POST, PUT, and DELETE methods
+- Custom headers support
+- Automatic response parsing and formatting
+- Separate files for request/response data and bodies
 
 ## Installation
 
-Setup a virtual environment
+1. Clone the repository
+```bash
+git clone https://github.com/AlejandroJorge/cli-rest-client.git
+cd cli-rest-client
+```
+
+2. Create and activate a virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+## Usage
+
+### Basic Usage
+
+Run the client by providing a request name:
 
 ```bash
-python3 -m venv .venv
+python rest_client.py <request_name>
 ```
 
-Get inside said virtual environment
+### Request Files
+
+The client expects two files:
+
+1. `{request_name}_request_data.json`
+
+```json
+{
+    "Host": "https://api.example.com",
+    "Path": "/users",
+    "Method": "GET",
+    "Headers": {
+        ...
+    }
+}
+```
+
+2. `{request_name}_request_body.json`
+
+```json
+{
+    ...
+}
+```
+
+### Response Files
+
+The client will automatically save the response data and body to the following files:
+
+1. `{request_name}_response_data.json`
+
+```json
+{
+    "Status_Code": 200,
+    "Is_Error": false,
+    "Headers": {
+      ...
+    }
+}
+```
+
+2. `{request_name}_response_body.json`
+
+```json
+{
+    ...
+}
+```
+
+### Example
+
+Testing the PokéAPI:
+
+1. Create `pokemon_api_request_data.json`
+
+```json
+{
+    "Host": "https://pokeapi.co/api/v2",
+    "Path": "/pokemon",
+    "Method": "GET",
+    "Headers": {}
+}
+```
+
+`pokemon_api_request_body.json` is not needed for this example (since it's a GET request)
+
+2. Run the client
 
 ```bash
-source .venv/bin/activate
+python rest_client.py pokemon_api
 ```
 
-Install dependencies
+3. Check the response files:
 
 ```bash
-pip install -r requirements.txt
+cat pokemon_api_response_data.json
+cat pokemon_api_response_body.json
 ```
 
-## How to use
+## License
 
-Make sure you're in the virtual environment (or your system has the necessary packages) and then run
-```
-python3 main.py
-```
-
-It will read the request data from `request_data.json`
-
-```json
-{
-  "Host": "https://pokeapi.co",
-  "Path": "/api/v2/pokemon/ditto",
-  "Method": "GET"
-}
-```
-
-And will also read request body from `request_body.json`
-
-```json
-{
-    // your schema
-}
-```
-
-Then the response metadata will be stored in `response_data.json`
-
-```json
-{
-  "Status_Code": 200,
-  "Is_Error": false,
-  "Headers": {
-    // response headers
-  }
-}
-```
-
-And the response body will be stored in `response_body.json`
-
-```json
-{
-    // your schema
-}
-```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
