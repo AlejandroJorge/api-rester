@@ -42,11 +42,8 @@ def write_response_data(response: requests.Response, file):
 
 def write_response_body(response: requests.Response, file):
     content_type = response.headers['Content-Type']
-    content_length = response.headers['Content-Length']
     if content_type is None or 'application/json' not in content_type:
         print("Not received a json body")
-    elif content_length is None or content_length == 0:
-        print("Not received a body")
     else:
         file.write(json.dumps(response.json(), indent=2))
 
