@@ -1,8 +1,8 @@
 import json
+import requests
+from pydantic import ValidationError
 from sys import stderr
 
-from pydantic import ValidationError
-import requests
 from lib.data import APIRequest, APIResponse
 
 
