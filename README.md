@@ -47,7 +47,7 @@ pip install api-rester
 2. Execute the request
 
 ```bash
-api-rester
+api-rester call
 ```
 
 3. The application will execute the request and save the response in the `response.json` file
@@ -73,7 +73,7 @@ The application supports alternative files to be used as a request and response.
 For example, if you have a file called `example-file.json` and want to receive the response in a different file called `example-response.json`, you can use it as a request by running the following command:
 
 ```bash
-api-rester --request-file example-file.json --response-file example-response.json
+api-rester call --request-file example-file.json --response-file example-response.json
 ```
 
 The application will execute the request and save the response in the `example-response.json` file.
@@ -95,7 +95,7 @@ For example, if you have an environment variable called `API_KEY`, you can repla
 When you execute the request, the application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable.
 
 ```bash
-API_KEY="1234567890" api-rester
+API_KEY="1234567890" api-rester call
 ```
 
 The application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable and execute the request.
@@ -132,7 +132,7 @@ The application will replace the `${{API_KEY}}` with the value of the `API_KEY` 
 2. Execute the request
 
 ```bash
-API_KEY=1234567890 api-rester --request-file example-file.json --response-file example-response.json
+API_KEY=1234567890 api-rester call --request-file example-file.json --response-file example-response.json
 ```
 
 3. The application will execute the request and save the response in the `example-response.json` file
@@ -148,6 +148,35 @@ API_KEY=1234567890 api-rester --request-file example-file.json --response-file e
         "name": "John Doe",
         "email": "john.doe@example.com"
     }
+}
+```
+
+## Template generation
+
+Api rester can also generate a template of what it expects as a request with this command:
+
+```bash
+api-rester template
+```
+
+Which you can specify the path with --filename or --f
+```bash
+api-rester template --filename custom_place.json
+```
+
+It will generate this file:
+```json
+{
+  "protocol": "http",
+  "host": "localhost:3000",
+  "path": "/",
+  "method": "GET",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "message": "Hello world"
+  }
 }
 ```
 
