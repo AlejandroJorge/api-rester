@@ -7,11 +7,11 @@ class APIRunner:
         self.response_filename = response_filename
 
     def onBeforeApiCall(self):
-        """Runs before making the API call"""
+        """Hook: Runs before making the API call"""
         pass
 
     def onAfterApiCall(self):
-        """Runs after making the API call"""
+        """Hook: Runs after making the API call"""
         pass
 
     def execute(self):
