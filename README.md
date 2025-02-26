@@ -2,15 +2,146 @@
 
 A lightweight command-line REST client for testing APIs without the overhead of GUI applications like Postman or Insomnia.
 
-## Core functionality
+## Features
 
-1. Request Execution
-    1.1 Read a `request.json` which includes metadata (host, headers, path) and body [DONE]
-    1.2 Execute HTTP Request [DONE]
-    1.3 Write the `response.json` with metadata and body [DONE]
-2. Support environment variables to be replaced in `request.json` files (`{{API KEY}}`) [DONE]
-3. Custom files workflow (request and response object to be defined from command line) [DONE]
-4. Validate `request.json` schema [DONE]
+- API Calls execution with request and response stored on JSON files
+- Support for all major HTTP methods (GET, POST, PUT, DELETE, HEAD, PATCH)
+- Environment variables replacement on request and response files
+- Alternative request and response files
+- Verbose logging mode for debugging
+
+### Coming Soon
+
+- Query parameters support
+- Environment variables from file
+
+## Basic Usage
+
+1. Create a request file, by default the application recognizes the file as `request.json`
+
+```json
+{
+    "protocol": "https", // required (http or https)
+    "host": "api.example.com", // required
+    "path": "/api/v1/users", // required
+    "method": "POST", // required (GET, POST, PUT, DELETE, HEAD, PATCH)
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+    }
+}
+```
+
+2. Execute the request
+
+```bash
+python3 api_rester.py
+```
+
+3. The application will execute the request and save the response in the `response.json` file
+
+```json
+{
+    "status": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "id": 59,
+        "name": "John Doe",
+        "email": "john.doe@example.com" 
+    }
+}
+```
+
+## Custom Files
+
+The application supports alternative files to be used as a request and response.
+
+For example, if you have a file called `example-file.json` and want to receive the response in a different file called `example-response.json`, you can use it as a request by running the following command:
+
+```bash
+python3 api_rester.py --request-file example-file.json --response-file example-response.json
+```
+
+The application will execute the request and save the response in the `example-response.json` file.
+
+## Environment Variables
+
+The application supports environment variables to be replaced in the `request.json` file.
+
+For example, if you have an environment variable called `API_KEY`, you can replace it in the `request.json` file with `${{API_KEY}}`.
+
+```json
+{
+    // ...
+    "path": "/api/v1/users/${{API_KEY}}"
+    // ...
+}
+```
+
+When you execute the request, the application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable.
+
+```bash
+export API_KEY="1234567890"
+api-rester
+```
+
+The application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable and execute the request.
+
+```json
+{
+    // ...
+    "path": "/api/v1/users/1234567890"
+    // ...
+}
+```
+
+## Example
+
+1. Create a request file called `example-file.json`
+
+```json
+{
+    "protocol": "https",
+    "host": "api.example.com",
+    "path": "/api/v1/users",
+    "method": "POST",
+    "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${API_KEY}"
+    },
+    "body": {
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+    }
+}
+```
+
+2. Execute the request
+
+```bash
+API_KEY=1234567890 python3 api_rester.py --request-file example-file.json --response-file example-response.json
+```
+
+3. The application will execute the request and save the response in the `example-response.json` file
+
+```json
+{
+    "status": 200,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "id": 59,
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+    }
+}
+```
 
 ## License
 
