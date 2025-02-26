@@ -18,7 +18,7 @@ class APIRequest(BaseModel):
     @field_validator("host")
     def validate_host(cls, value: str) -> str:
         host_pattern = r"""
-        ^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)+([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$
+        ^(((?:([a-z0-9-]+|\*)\.)?([a-z0-9-]{1,61})\.([a-z0-9]{2,7}))|(localhost))(:[0-9]{1,4})?$
         """
         if not re.match(host_pattern, value, re.X):
             raise ValueError(
@@ -29,9 +29,7 @@ class APIRequest(BaseModel):
 
     @field_validator("path")
     def validate_path(cls, value: str) -> str:
-        path_pattern = r"""
-        ^\/(?!.*\/\/)([a-zA-Z-\/]+)$
-        """
+        path_pattern = r"^\/$|^\/(?!.*\/\/)[a-zA-Z0-9_\-/]+$"
         if not re.match(path_pattern, value, re.X):
             raise ValueError(
                 "Invalid path"
