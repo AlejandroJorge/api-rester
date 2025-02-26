@@ -2,6 +2,13 @@
 
 A lightweight command-line REST client for testing APIs without the overhead of GUI applications like Postman or Insomnia.
 
+## Installation
+
+Api Rester can be installed through pip package manager with the following command
+```bash
+pip install api-rester
+```
+
 ## Features
 
 - API Calls execution with request and response stored on JSON files
@@ -40,7 +47,7 @@ A lightweight command-line REST client for testing APIs without the overhead of 
 2. Execute the request
 
 ```bash
-python3 api_rester.py
+api-rester
 ```
 
 3. The application will execute the request and save the response in the `response.json` file
@@ -66,7 +73,7 @@ The application supports alternative files to be used as a request and response.
 For example, if you have a file called `example-file.json` and want to receive the response in a different file called `example-response.json`, you can use it as a request by running the following command:
 
 ```bash
-python3 api_rester.py --request-file example-file.json --response-file example-response.json
+api-rester --request-file example-file.json --response-file example-response.json
 ```
 
 The application will execute the request and save the response in the `example-response.json` file.
@@ -88,8 +95,7 @@ For example, if you have an environment variable called `API_KEY`, you can repla
 When you execute the request, the application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable.
 
 ```bash
-export API_KEY="1234567890"
-python3 api_rester.py
+API_KEY="1234567890" api-rester
 ```
 
 The application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable and execute the request.
@@ -126,7 +132,7 @@ The application will replace the `${{API_KEY}}` with the value of the `API_KEY` 
 2. Execute the request
 
 ```bash
-API_KEY=1234567890 python3 api_rester.py --request-file example-file.json --response-file example-response.json
+API_KEY=1234567890 api-rester --request-file example-file.json --response-file example-response.json
 ```
 
 3. The application will execute the request and save the response in the `example-response.json` file
