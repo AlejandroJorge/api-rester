@@ -1,2 +1,3 @@
-run:
-	@METHOD=GET python3 api-rester.py --v
+build:
+	python3 -m pip install --upgrade build
+	python3 -m build

@@ -4,7 +4,7 @@ from lib.api_runner import BaseAPIRunner
 from lib.config import app_config
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(
         prog="api-rester",
         description="CLI API REST Client"
@@ -24,3 +24,7 @@ if __name__ == '__main__':
         request_filename=args.req, response_filename=args.res)
 
     api_runner.execute()
+
+
+if __name__ == '__main__':
+    main()

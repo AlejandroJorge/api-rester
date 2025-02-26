@@ -1,0 +1,25 @@
+[project]
+name = "api_rester"
+version = "0.1.2"
+authors = [
+  { name="AlejandroJorge", email="a20202060@pucp.edu.pe" },
+]
+description = "A simple REST API client CLI utility"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = {file = "LICENSE"}
+dependencies = [
+  "requests>=2.32.3",
+  "pydantic>=2.10.6"
+]
+
+[project.scripts]
+api-rester = "api_rester:main"
+
+[project.urls]
+Homepage = "https://github.com/AlejandroJorge/api-rester"
+Issues = "https://github.com/AlejandroJorge/api-rester/issues"

@@ -1,5 +1,2 @@
 requests
 pydantic
-argparse
-json
-re

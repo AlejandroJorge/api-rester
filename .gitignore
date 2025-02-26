@@ -5,3 +5,6 @@ response.json
 __pycache__
 venv
 .venv
+
+dist/
+src/api_rester.egg-info/
