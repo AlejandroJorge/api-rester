@@ -1,7 +1,5 @@
-*_request_body.json
-*_request_data.json
-*_response_body.json
-*_response_data.json
+request.json
+response.json
 
 __pycache__
 venv
