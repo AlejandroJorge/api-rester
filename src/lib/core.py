@@ -4,7 +4,7 @@ from pydantic import ValidationError
 from sys import stderr
 
 from lib.data import APIRequest, APIResponse
-from lib.util import replace_env, dbg_print
+from lib.util import replace_env, dbg_print, prepare_query_params
 from lib.config import app_config
 
 
@@ -44,22 +44,31 @@ def read_request_file(request_filename: str) -> APIRequest:
 def make_api_call(req_data: APIRequest) -> APIResponse:
     url = f"{req_data.protocol}://{req_data.host}{req_data.path}"
     if app_config.verbose:
-        dbg_print("Making API call")
+        dbg_print("Making API call with the following parameters")
         dbg_print(f"Method: {req_data.method}")
-        dbg_print(f"URL: {url}")
+        dbg_print(f"Protocol: {req_data.protocol}")
+        dbg_print(f"Host: {req_data.host}")
+        dbg_print(f"Path: {req_data.path}")
         if req_data.headers:
             dbg_print("Headers:")
             for header in req_data.headers:
                 dbg_print(f"  {header}: {req_data.headers[header]}")
+        if req_data.queryParams:
+            dbg_print("Query Parameters:")
+            for param in req_data.queryParams:
+                dbg_print(f"  {param}: {req_data.queryParams[param]}")
         dbg_print()
 
     try:
+        req_data.queryParams = prepare_query_params(req_data.queryParams)
         response = requests.request(
             method=req_data.method,
             url=url,
             headers=req_data.headers,
-            json=req_data.body
+            json=req_data.body,
+            params=req_data.queryParams
         )
+        dbg_print(f"Final URL: {response.request.url}")
     except Exception as err:
         print(f"HTTP Request failed: {err}")
         exit(1)

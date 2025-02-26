@@ -78,3 +78,17 @@ def search_and_replace_str(string: str) -> str:
         string[start_idx:end_idx+len(end_construct)], env_var_value)
 
     return search_and_replace_str(string)
+
+
+def prepare_query_params(
+    queryParams: dict[str, str | list[str]] | None
+) -> dict[str, str | list[str]] | None:
+    if queryParams is None:
+        return None
+
+    for field in queryParams:
+        value = queryParams[field]
+        if isinstance(value, list):
+            queryParams[field] = " ".join(value)
+
+    return queryParams

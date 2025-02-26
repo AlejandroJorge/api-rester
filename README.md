@@ -13,13 +13,13 @@ pip install api-rester
 
 - API Calls execution with request and response stored on JSON files
 - Support for all major HTTP methods (GET, POST, PUT, DELETE, HEAD, PATCH)
+- Query parameters support
 - Environment variables replacement on request and response files
 - Alternative request and response files
 - Verbose logging mode for debugging
 
-### Coming Soon
+### Coming in the future
 
-- Query parameters support
 - Network error handling
 - Environment variables from file
 - Persistent cookies support

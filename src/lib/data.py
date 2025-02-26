@@ -12,8 +12,34 @@ class APIRequest(BaseModel):
     path: str
     method: SupportedHTTPMethod
     headers: dict[str, str] | None = None
+    queryParams: dict[str, str | list[str]] | None = None
     # TODO maybe properly validate
     body: dict[str, Any] | list[Any] | None = None
+
+    @field_validator("queryParams")
+    def validate_queryParams(
+            cls,
+            value: dict[str, str | list[str]] | None) -> dict[str, str | list[str]] | None:
+        if value is None:
+            return None
+
+        queryParams = value
+        for field in queryParams:
+            if not field.isalnum():
+                raise ValueError(
+                    "Query params names should be alphanumeric"
+                )
+            val = queryParams[field]
+            if isinstance(val, str) and not val.isalnum():
+                raise ValueError(
+                    "Query params values should be alphanumeric"
+                )
+            if isinstance(val, list) and any([not elm.isalnum() for elm in val]):
+                raise ValueError(
+                    "Query params values inside a list should be alphanumeric"
+                )
+
+        return value
 
     @field_validator("host")
     def validate_host(cls, value: str) -> str:
