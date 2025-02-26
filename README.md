@@ -15,6 +15,7 @@ A lightweight command-line REST client for testing APIs without the overhead of 
 - Query parameters support
 - Network error handling
 - Environment variables from file
+- Persistent cookies support
 
 ## Basic Usage
 
