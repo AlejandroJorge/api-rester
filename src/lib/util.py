@@ -89,6 +89,6 @@ def prepare_query_params(
     for field in queryParams:
         value = queryParams[field]
         if isinstance(value, list):
-            queryParams[field] = " ".join(value)
+            queryParams[field] = ",".join(value)
 
     return queryParams

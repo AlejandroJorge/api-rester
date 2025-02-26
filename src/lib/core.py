@@ -68,7 +68,8 @@ def make_api_call(req_data: APIRequest) -> APIResponse:
             json=req_data.body,
             params=req_data.queryParams
         )
-        dbg_print(f"Final URL: {response.request.url}")
+        if app_config.verbose:
+            dbg_print(f"Final URL: {response.request.url}")
     except Exception as err:
         print(f"HTTP Request failed: {err}")
         exit(1)
