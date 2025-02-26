@@ -1,2 +1,2 @@
 run:
-	@python3 api-rester.py
+	@python3 api-rester.py --v

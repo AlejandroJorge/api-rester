@@ -1,5 +1,6 @@
 request.json
 response.json
+*.json
 
 __pycache__
 venv

@@ -4,6 +4,7 @@ from pydantic import ValidationError
 from sys import stderr
 
 from lib.data import APIRequest, APIResponse
+from lib.util import replace_env
 
 
 def read_request_file(request_filename: str) -> APIRequest:
@@ -16,6 +17,7 @@ def read_request_file(request_filename: str) -> APIRequest:
 
     try:
         req_data = json.load(req_file)
+        replace_env(req_data)
     except Exception as err:
         print(f"Couldn't parse json in request file {
               request_filename}: {err}", file=stderr)
