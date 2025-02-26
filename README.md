@@ -13,6 +13,7 @@ A lightweight command-line REST client for testing APIs without the overhead of 
 ### Coming Soon
 
 - Query parameters support
+- Network error handling
 - Environment variables from file
 
 ## Basic Usage
@@ -87,7 +88,7 @@ When you execute the request, the application will replace the `${{API_KEY}}` wi
 
 ```bash
 export API_KEY="1234567890"
-api-rester
+python3 api_rester.py
 ```
 
 The application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable and execute the request.
@@ -112,7 +113,7 @@ The application will replace the `${{API_KEY}}` with the value of the `API_KEY` 
     "method": "POST",
     "headers": {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${API_KEY}"
+        "Authorization": "Bearer ${{API_KEY}}"
     },
     "body": {
         "name": "John Doe",
