@@ -1,6 +1,8 @@
 from os import getenv
 from typing import Any
 
+from lib.config import app_config
+
 
 def dbg_print(str: str = ''):
     if str != '':
@@ -10,6 +12,9 @@ def dbg_print(str: str = ''):
 
 
 def replace_env(req_data: dict[str, Any]):
+    if app_config.verbose:
+        dbg_print("Replacing env vars")
+
     for key in req_data:
         if isinstance(req_data[key], dict):
             req_data[key] = search_and_replace_dict(req_data[key])
@@ -17,6 +22,9 @@ def replace_env(req_data: dict[str, Any]):
             req_data[key] = search_and_replace_list(req_data[key])
         elif isinstance(req_data[key], str):
             req_data[key] = search_and_replace_str(req_data[key])
+
+    if app_config.verbose:
+        dbg_print()
 
 
 def search_and_replace_list(collection: list) -> list:
@@ -62,6 +70,9 @@ def search_and_replace_str(string: str) -> str:
     if env_var_value is None:
         raise Exception(f"Environment variable {
                         env_var_name} hasn't been provided")
+
+    if app_config:
+        dbg_print(f"{env_var_name} was replaced with {env_var_value}")
 
     string = string.replace(
         string[start_idx:end_idx+len(end_construct)], env_var_value)

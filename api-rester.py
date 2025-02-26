@@ -1,6 +1,7 @@
 import argparse
 
-from lib.api_runner import BaseAPIRunner, DebugAPIRunner
+from lib.api_runner import BaseAPIRunner
+from lib.config import app_config
 
 
 if __name__ == '__main__':
@@ -17,13 +18,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    APIRunner = DebugAPIRunner if args.v else BaseAPIRunner
+    app_config.verbose = args.v
 
-    api_runner_args = {
-        "request_filename": args.req,
-        "response_filename": args.res
-    }
-
-    api_runner = APIRunner(**api_runner_args)
+    api_runner = BaseAPIRunner(
+        request_filename=args.req, response_filename=args.res)
 
     api_runner.execute()

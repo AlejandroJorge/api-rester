@@ -1,2 +1,2 @@
 run:
-	@python3 api-rester.py --v
+	@METHOD=GET python3 api-rester.py --v
