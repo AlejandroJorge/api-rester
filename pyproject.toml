@@ -15,7 +15,7 @@ license = {file = "LICENSE"}
 dependencies = [
   "requests>=2.32.3",
   "pydantic>=2.10.6",
-  "dotenv>=1.0.1"
+  "dotenv>=0.9.9"
 ]
 
 [project.scripts]
