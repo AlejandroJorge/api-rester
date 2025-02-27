@@ -20,6 +20,11 @@ pip install api-rester
 - Get environment variables from .env file automatically
 - Persistent cookies support
 
+## Future work
+
+- Timeouts
+- Stdin, Stdout support for piping: `python seeder-script.py | api-rester call | bash analytics-script.py`
+
 ## Basic Usage
 
 1. Create a request file, by default the application recognizes the file as `request.json`
