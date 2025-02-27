@@ -46,6 +46,9 @@ class APIRequest(BaseModel):
         host_pattern = r"""
         ^(((?:([a-z0-9-]+|\*)\.)?([a-z0-9-]{1,61})\.([a-z0-9]{2,7}))|(localhost))(:[0-9]{1,4})?$
         """
+        host_pattern = r"""
+        (?i)^((?:([a-z0-9-]+|\*)\.)?([a-z0-9-]{1,61})(\.[a-z0-9-]{1,61})*\.([a-z0-9]{2,7})|localhost|([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}))(:[0-9]{1,4})?$
+        """
         if not re.match(host_pattern, value, re.X):
             raise ValueError(
                 "Invalid host, must be a valid domain name or IP address")

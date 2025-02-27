@@ -160,6 +160,8 @@ def read_cookies_file(cookies_filename: str) -> list[Cookie]:
 
 def write_cookies_file(cookies_filename: str, cookies: list[Cookie]):
     if len(cookies) == 0:
+        dbg_print("No cookies to write, omitting")
+        dbg_print()
         return
 
     if app_config.verbose:
