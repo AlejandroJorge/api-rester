@@ -1,40 +1,47 @@
-# Api Rester
+# Api Rester 🚀
 
-A lightweight command-line REST client for testing APIs without the overhead of GUI applications like Postman or Insomnia.
+A lightweight, user-friendly command-line REST client that lets you test APIs without the overhead of GUI applications like Postman or Insomnia. Perfect for developers who prefer staying in their terminal!
 
-## Installation
+## Installation 📥
 
-Api Rester can be installed through pip package manager with the following command
+Install Api Rester using pip:
 ```bash
 pip install api-rester
 ```
 
-## Features
+## Why Api Rester? ✨
 
-- API Calls execution with request and response stored on JSON files
-- Support for all major HTTP methods (GET, POST, PUT, DELETE, HEAD, PATCH)
-- Query parameters support
-- Environment variables replacement on request and response files
-- Alternative request and response files
-- Verbose logging mode for debugging
-- Get environment variables from .env file automatically
-- Persistent cookies support
+Api Rester provides a streamlined way to test APIs directly from your terminal:
 
-## Future work
+Core Features:
+- Make API calls using JSON files for requests and responses
+- Support for common HTTP methods (GET, POST, PUT, DELETE, HEAD, PATCH)
+- Handle query parameters and headers
+- Environment variable substitution from .env files
+- Configurable verbose logging for debugging
 
-- Timeouts
-- Stdin, Stdout support for piping: `python seeder-script.py | api-rester call | bash analytics-script.py`
+Request/Response Handling:
+- Store and validate requests/responses as JSON
+- Validate domains and paths
+- Safe handling of HTTP headers
+- Support for alternative request/response files
 
-## Basic Usage
+Cookie Management:
+- Persistent cookie storage between requests
+- Cookie validation and security checks
 
-1. Create a request file, by default the application recognizes the file as `request.json`
+## Getting Started 🎯
+
+### 1. Create Your First Request
+
+Create a `request.json` file:
 
 ```json
 {
-    "protocol": "https", // required (http or https)
-    "host": "api.example.com", // required
-    "path": "/api/v1/users", // required
-    "method": "POST", // required (GET, POST, PUT, DELETE, HEAD, PATCH)
+    "protocol": "https",
+    "host": "api.example.com",
+    "path": "/api/v1/users",
+    "method": "POST",
     "headers": {
         "Content-Type": "application/json"
     },
@@ -45,13 +52,15 @@ pip install api-rester
 }
 ```
 
-2. Execute the request
+### 2. Make the Call
 
 ```bash
 api-rester call
 ```
 
-3. The application will execute the request and save the response in the `response.json` file
+### 3. Check the Response
+
+Api Rester saves the response in `response.json`:
 
 ```json
 {
@@ -67,120 +76,88 @@ api-rester call
 }
 ```
 
-## Custom Files
+## Advanced Features
 
-The application supports alternative files to be used as a request and response.
+### Custom File Names
 
-For example, if you have a file called `example-file.json` and want to receive the response in a different file called `example-response.json`, you can use it as a request by running the following command:
+Need to use different file names? No problem:
 
 ```bash
-api-rester call --request-file example-file.json --response-file example-response.json
+api-rester call --request-file custom-request.json --response-file custom-response.json
 ```
 
-The application will execute the request and save the response in the `example-response.json` file.
+### Environment Variables
 
-## Environment Variables
-
-The application supports environment variables to be replaced in the `request.json` file.
-
-For example, if you have an environment variable called `API_KEY`, you can replace it in the `request.json` file with `${{API_KEY}}`.
+Use environment variables in your requests with `${{VARIABLE_NAME}}` syntax:
 
 ```json
 {
-    // ...
-    "path": "/api/v1/users/${{API_KEY}}"
-    // ...
+    "headers": {
+        "Authorization": "Bearer ${{API_KEY}}"
+    }
 }
 ```
 
-When you execute the request, the application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable.
-
+Run it with:
 ```bash
-API_KEY="1234567890" api-rester call
+API_KEY=your_key_here api-rester call
 ```
 
-The application will replace the `${{API_KEY}}` with the value of the `API_KEY` environment variable and execute the request.
+### Query Parameters Made Easy
 
-```json
-{
-    // ...
-    "path": "/api/v1/users/1234567890"
-    // ...
-}
-```
-
-## Example
-
-1. Create a request file called `example-file.json`
+Add query parameters that are automatically encoded:
 
 ```json
 {
     "protocol": "https",
     "host": "api.example.com",
-    "path": "/api/v1/users",
-    "method": "POST",
-    "headers": {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer ${{API_KEY}}"
-    },
-    "body": {
-        "name": "John Doe",
-        "email": "john.doe@example.com"
+    "path": "/search",
+    "method": "GET",
+    "queryParams": {
+        "q": "search term",
+        "filter": ["active", "verified"]
     }
 }
 ```
 
-2. Execute the request
+### Smart Cookie Management
+
+Cookies are automatically handled between requests and stored in `cookies.json`. They're automatically sent with matching domain requests - just like a browser would do!
+
+### Debug Mode
+
+Need to see what's happening? Use verbose mode:
 
 ```bash
-API_KEY=1234567890 api-rester call --request-file example-file.json --response-file example-response.json
+api-rester call --v
 ```
 
-3. The application will execute the request and save the response in the `example-response.json` file
+### Quick Cleanup
 
-```json
-{
-    "status": 200,
-    "headers": {
-        "Content-Type": "application/json"
-    },
-    "body": {
-        "id": 59,
-        "name": "John Doe",
-        "email": "john.doe@example.com"
-    }
-}
-```
-
-## Template generation
-
-Api rester can also generate a template of what it expects as a request with this command:
+Clean up generated files:
 
 ```bash
-api-rester template
+api-rester clear
 ```
 
-Which you can specify the path with --filename or --f
+Or specify custom files to clear:
 ```bash
-api-rester template --filename custom_place.json
+api-rester clear --req custom-request.json --res custom-response.json --cookies custom-cookies.json
 ```
 
-It will generate this file:
-```json
-{
-  "protocol": "http",
-  "host": "localhost:3000",
-  "path": "/",
-  "method": "GET",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "body": {
-    "message": "Hello world"
-  }
-}
+### Generate Request Templates
+
+Start with a template to save time:
+
+```bash
+api-rester template --filename my-request.json
 ```
 
-## License
+## Coming Soon 🔜
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+- Request timeouts
+- Stdin/Stdout support for piping: `python seeder-script.py | api-rester call | bash analytics-script.sh`
+
+## License 📄
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
