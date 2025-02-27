@@ -1,4 +1,5 @@
-from lib.core import make_api_call, read_request_file, write_cookies_file, write_response_file
+from lib.core import make_api_call, read_request_file
+from lib.core import write_cookies_file, write_response_file
 
 from lib.core import read_cookies_file
 
@@ -63,7 +64,8 @@ class BaseAPIRunner:
         self.onAfterReadingCookies()
 
         self.onBeforeApiCall()
-        self.res_data = make_api_call(self.req_data, self.cookies_data)
+        self.res_data, self.cookies_data = make_api_call(
+            self.req_data, self.cookies_data)
         self.onAfterApiCall()
 
         self.onBeforeWritingCookies()
