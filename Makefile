@@ -3,6 +3,9 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
+run:
+	python ./src/api_rester.py call --verbose
+
 upload: build
 	python -m twine upload --repository pypi dist/* --verbose --non-interactive
 

@@ -90,3 +90,50 @@ class APIResponse(BaseModel):
     status_code: int
     headers: dict[str, str] | None = None
     body: dict[str, Any] | list[Any] | None = None
+
+
+class Cookie(BaseModel):
+    name: str
+    value: str
+    domain: str
+    path: str = "/"
+
+    @field_validator("name")
+    def validate_name(cls, value: str) -> str:
+        cookie_name_pattern = r'^[!#$%&\'*+\-.0-9A-Z^_`a-z|~]+$'
+        if not re.match(cookie_name_pattern, value):
+            raise ValueError(
+                "Cookie name can only contain US-ASCII characters except control "
+                "characters and separators (space, tab, and ()[]<>@,;:\\\"/=?{})"
+            )
+        return value
+
+    @field_validator("value")
+    def validate_value(cls, value: str) -> str:
+        cookie_value_pattern = r'^[\x20-\x21\x23-\x2B\x2D-\x3A\x3C-\x5B\x5D-\x7E]+$'
+        if not re.match(cookie_value_pattern, value):
+            raise ValueError(
+                "Cookie value can only contain US-ASCII characters excluding control "
+                "characters, whitespace, double quotes, comma, semicolon and backslash"
+            )
+        return value
+
+    @field_validator("domain")
+    def validate_domain(cls, value: str) -> str:
+        value = value.lstrip('.')
+        domain_pattern = r'^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'
+        if not re.match(domain_pattern, value):
+            raise ValueError(
+                "Domain must be a valid hostname containing only alphanumeric "
+                "characters, hyphens, and dots"
+            )
+        return value
+
+    @field_validator("path")
+    def validate_path(cls, value: str) -> str:
+        path_pattern = r"^\/$|^\/(?!.*\/\/)[a-zA-Z0-9_\-/]+$"
+        if not re.match(path_pattern, value, re.X):
+            raise ValueError(
+                "Invalid path"
+            )
+        return value

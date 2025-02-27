@@ -18,10 +18,6 @@ pip install api-rester
 - Alternative request and response files
 - Verbose logging mode for debugging
 - Get environment variables from .env file automatically
-
-### Coming in the future
-
-- Network error handling
 - Persistent cookies support
 
 ## Basic Usage
