@@ -14,7 +14,8 @@ classifiers = [
 license = {file = "LICENSE"}
 dependencies = [
   "requests>=2.32.3",
-  "pydantic>=2.10.6"
+  "pydantic>=2.10.6",
+  "dotenv>=1.0.1"
 ]
 
 [project.scripts]

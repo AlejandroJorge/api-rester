@@ -1,4 +1,5 @@
 import argparse
+from dotenv import load_dotenv
 
 from lib.api_runner import BaseAPIRunner
 from lib.config import app_config
@@ -7,6 +8,8 @@ from lib.template import write_template
 
 
 def main():
+    load_dotenv()
+
     parser = argparse.ArgumentParser(
         prog="api-rester",
         description="A simple REST API CLI Client"

@@ -17,11 +17,11 @@ pip install api-rester
 - Environment variables replacement on request and response files
 - Alternative request and response files
 - Verbose logging mode for debugging
+- Get environment variables from .env file automatically
 
 ### Coming in the future
 
 - Network error handling
-- Environment variables from file
 - Persistent cookies support
 
 ## Basic Usage
