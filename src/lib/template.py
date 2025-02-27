@@ -4,13 +4,18 @@ from sys import stderr
 template = {
     "protocol": "http",
     "host": "localhost:3000",
-    "path": "/",
-    "method": "GET",
+    "path": "/api/v1/data",
+    "method": "POST",
     "headers": {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": "Bearer ${{API_KEY}}",
     },
     "body": {
         "message": "Hello world"
+    },
+    "query": {
+        "page": "1",
+        "limit": "10"
     }
 }
 
