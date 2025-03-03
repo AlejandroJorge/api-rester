@@ -6,7 +6,6 @@ from sys import stderr
 from lib.data import APIRequest, APIResponse
 from lib.util import dbg_print_api_call_res, dbg_print_api_call_req
 from lib.util import replace_env, dbg_print, prepare_query_params
-from lib.config import app_config
 
 from lib.data import Cookie
 
@@ -14,9 +13,8 @@ from lib.util import prepare_cookie_data
 
 
 def read_request_file(request_filename: str) -> APIRequest:
-    if app_config.verbose:
-        dbg_print(f"Reading request from file: {request_filename}")
-        dbg_print()
+    dbg_print(f"Reading request from file: {request_filename}")
+    dbg_print()
 
     try:
         req_file = open(request_filename, "r")
@@ -39,9 +37,8 @@ def read_request_file(request_filename: str) -> APIRequest:
         print(f"Request file doesn't comply with expected model: {err}")
         exit(1)
 
-    if app_config.verbose:
-        dbg_print(f"Successfully read request from file: {request_filename}")
-        dbg_print()
+    dbg_print(f"Successfully read request from file: {request_filename}")
+    dbg_print()
 
     return req_data
 
@@ -49,8 +46,7 @@ def read_request_file(request_filename: str) -> APIRequest:
 def make_api_call(req_data: APIRequest,
                   cookie_data: list[Cookie]
                   ) -> tuple[APIResponse, list[Cookie]]:
-    if app_config.verbose:
-        dbg_print_api_call_req(req_data, cookie_data)
+    dbg_print_api_call_req(req_data, cookie_data)
 
     try:
         req_data.queryParams = prepare_query_params(req_data.queryParams)
@@ -63,8 +59,7 @@ def make_api_call(req_data: APIRequest,
             params=req_data.queryParams,
             cookies=prepare_cookie_data(cookie_data)
         )
-        if app_config.verbose:
-            dbg_print(f"Final URL: {response.request.url}")
+        dbg_print(f"Final URL: {response.request.url}")
     except Exception as err:
         print(f"HTTP Request failed: {err}")
         exit(1)
@@ -80,8 +75,7 @@ def make_api_call(req_data: APIRequest,
         headers=dict(response.headers),
         body=body)
 
-    if app_config.verbose:
-        dbg_print_api_call_res(response)
+    dbg_print_api_call_res(response)
 
     cookies_returned = []
     for cookie in response.cookies:
@@ -100,9 +94,8 @@ def make_api_call(req_data: APIRequest,
 
 
 def write_response_file(response_filename: str, res_data: APIResponse):
-    if app_config.verbose:
-        dbg_print(f"Writing response to file: {response_filename}")
-        dbg_print()
+    dbg_print(f"Writing response to file: {response_filename}")
+    dbg_print()
 
     try:
         res_file = open(response_filename, "w+")
@@ -119,23 +112,20 @@ def write_response_file(response_filename: str, res_data: APIResponse):
               response_filename}: {err}", file=stderr)
         exit(1)
 
-    if app_config.verbose:
-        dbg_print(f"Sucessfully written response to file: {response_filename}")
-        dbg_print()
+    dbg_print(f"Sucessfully written response to file: {response_filename}")
+    dbg_print()
 
 
 def read_cookies_file(cookies_filename: str) -> list[Cookie]:
-    if app_config.verbose:
-        dbg_print(f"Reading cookies from file: {cookies_filename}")
-        dbg_print()
+    dbg_print(f"Reading cookies from file: {cookies_filename}")
+    dbg_print()
 
     try:
         cookies_file = open(cookies_filename, "r")
     except Exception as err:
         if isinstance(err, FileNotFoundError):
-            if app_config.verbose:
-                dbg_print("Couldn't find file for cookies, omitting it")
-                dbg_print()
+            dbg_print("Couldn't find file for cookies, omitting it")
+            dbg_print()
             return []
         print(f"Couldn't open cookies file {
               cookies_filename}: {err}", file=stderr)
@@ -160,14 +150,12 @@ def read_cookies_file(cookies_filename: str) -> list[Cookie]:
 
 def write_cookies_file(cookies_filename: str, cookies: list[Cookie]):
     if len(cookies) == 0:
-        if app_config.verbose:
-            dbg_print("No cookies to write, omitting")
-            dbg_print()
+        dbg_print("No cookies to write, omitting")
+        dbg_print()
         return
 
-    if app_config.verbose:
-        dbg_print(f"Writing cookies to file: {cookies_filename}")
-        dbg_print()
+    dbg_print(f"Writing cookies to file: {cookies_filename}")
+    dbg_print()
 
     try:
         cookies_file = open(cookies_filename, "w+")
@@ -184,6 +172,5 @@ def write_cookies_file(cookies_filename: str, cookies: list[Cookie]):
               cookies_file}: {err}", file=stderr)
         exit(1)
 
-    if app_config.verbose:
-        dbg_print(f"Sucessfully written cookies to file: {cookies_file}")
-        dbg_print()
+    dbg_print(f"Sucessfully written cookies to file: {cookies_file}")
+    dbg_print()

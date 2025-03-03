@@ -10,6 +10,8 @@ from lib.data import APIRequest, Cookie
 
 
 def dbg_print(str: str = ''):
+    if not app_config.verbose:
+        return
     if str != '':
         print(f"[DEBUG] {str}")
     else:
