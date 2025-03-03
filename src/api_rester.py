@@ -9,7 +9,7 @@ from lib.util import clear_files
 
 
 def main():
-    load_dotenv()
+    load_dotenv(dotenv_path=".env")
 
     parser = argparse.ArgumentParser(
         prog="api-rester",

@@ -25,18 +25,18 @@ class APIRequest(BaseModel):
 
         queryParams = value
         for field in queryParams:
-            if not field.isalnum():
+            if not re.match(r'^[\w-]+$', field):
                 raise ValueError(
-                    "Query params names should be alphanumeric"
+                    "Query params names should be alphanumeric and only include _ or - as special char"
                 )
             val = queryParams[field]
-            if isinstance(val, str) and not val.isalnum():
+            if isinstance(val, str) and not re.match(r'^[\w-]+$', field):
                 raise ValueError(
-                    "Query params values should be alphanumeric"
+                    "Query params values should be alphanumeric and only include _ or - as special char"
                 )
-            if isinstance(val, list) and any([not elm.isalnum() for elm in val]):
+            if isinstance(val, list) and any([not re.match(r'^[\w-]+$', elm) for elm in val]):
                 raise ValueError(
-                    "Query params values inside a list should be alphanumeric"
+                    "Query params values inside a list should be alphanumeric and only include _ or - as special char"
                 )
 
         return value
